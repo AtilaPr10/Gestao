@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:j="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    
+    
+    
+     <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="algaworks" name="styles/login.css" />
+    </h:head>
+
+    <h:body>
+    
+         <h:form id="frm_login">
+            
+              <div id="login-dialog">
+                   <p:messages autoUpdate="true" />
+                   
+                                  <p:outputLabel value="Nome"></p:outputLabel>
+                                  <p:inputText value="#{controllerProjeto.projeto.nome_cliente}"></p:inputText>
+                                   <p:outputLabel value="Email" id="email"/>
+                                   <p:inputText placeholder="seuemail@provedor.com"
+                                    value="#{controllerProjeto.remetente_email}" for="email"/>
+                                    
+                                   <p:outputLabel value="Senha" id="senha"/>
+                                   <p:password  value="#{controllerProjeto.senha}" for="senha"/>
+                                   
+                                   <p:outputLabel value="Email Cliente" id="email_cliente"/>
+                                   <p:inputText placeholder="seuemail@provedor.com"
+                                    value="#{controllerProjeto.destinatario_email}" for="email_cliente"/>
+                                    
+                                   <p:outputLabel value="Email Copia" id="email_copia"/>
+                                   <p:inputText placeholder="seuemail@provedor.com"
+                                    value="#{controllerProjeto.copia_email}" for="email_copia"/>
+                                    
+                                    <p:commandButton value="Enviar" action="#{controllerProjeto.doProjeto}">
+                                    </p:commandButton>
+                     
+               
+              
+              </div>
+         
+         </h:form>
+    
+    
+    </h:body>
+   
+
+    
+
+</html>

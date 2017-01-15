@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      template="/WEB-INF/templates/Layout.xhtml">
+      
+      
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    
+   <ui:define name="content">
+		<h1 class="aw-page-title">Configurações</h1>
+   
+      <h:body>
+          <h:form id="frm_configuracao" >
+              
+             
+	      
+         <p:messages autoUpdate="true" /> 
+         
+             
+              <div class="ui-fluid">
+             
+                   <p:menubar >
+                     <p:submenu label="Opções">
+                     <p:submenu label="Email">
+                               <p:menuitem value="Email" url="/cadastro/email.xhtml" />
+                               
+                    </p:submenu>
+                    <p:submenu label="Layout">
+                         <p:menuitem value="Layout do Sistema" url="/cadastro/layoutsistema.xhtml" />
+                    </p:submenu> 
+                     <p:submenu label="Logo">
+                         <p:menuitem value="Logomarca da Empresa " url="#" />
+                    </p:submenu> 
+                    <p:submenu label="Certificado Digital">
+                         <p:menuitem value="Certificado  " url="/cadastro/certificado.xhtml" />
+                    </p:submenu> 
+                    </p:submenu>
+                    </p:menubar>     
+                  
+                  
+                  
+              </div>
+              
+              
+              
+              
+          </h:form>
+    </h:body>
+   </ui:define>
+    	
+</ui:composition>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      template="/WEB-INF/templates/Layout.xhtml">
+      
+      
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+      
+   <ui:define name="content">
+   
+	<!--<h1 class="aw-page-title">Selecione..</h1>  -->
+  
+      <h:body>
+      
+          <h:form id="frm_selecao_cliente" >
+              
+             
+	      
+         <p:messages autoUpdate="true" /> 
+         
+             
+              <div class="ui-fluid">
+              
+               <h:panelGroup id="itemPanel" layout="block" styleClass="ui-fluid">
+				        	
+					
+					<p:panelGrid columns="2" layout="grid"
+					    styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-4, ui-grid-col-8">
+						
+					    <p:outputLabel value="Nome" for="nome" />
+						<p:inputText id="nome" value="#{controllerProjeto.nome_digitado}" placeholder="Nome do Cliente"/>
+						<p:commandButton icon="ui-icon-search" action = "#{controllerProjeto.buscarCliente}" update="@form" />
+						
+					   
+				    </p:panelGrid>
+				    
+				    
+				    <p:dataTable id="clientesTable" 
+                    	     value="#{controllerProjeto.clientes}" 
+				             var="cli"
+		             		 emptyMessage="Nenhum cliente encontrado."
+				             reflow="true"
+				             style="margin-top: 50px"
+				             paginator="true" 
+				             paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				
+			    	        <p:column headerText="Nome">
+				     	          <p:outputLabel value="#{cli.nome}"/>
+				            </p:column>
+	                        <p:column headerText="CNPJ">
+				            	  <p:outputLabel value="#{cli.cpf_cnpj}"/>
+				            </p:column>
+				            <p:column style="width: 30px; text-align: center">
+				            	  <p:commandButton icon="ui-icon-check"/>
+				             </p:column>
+			
+			             </p:dataTable>
+               
+					
+				</h:panelGroup>
+				
+                    
+                    
+                    	
+                
+                  
+                  
+              </div>
+              
+       </h:form>
+      </h:body>
+     </ui:define>
+ </ui:composition>

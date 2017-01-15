@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      template="/WEB-INF/templates/Layout.xhtml">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    
+   <ui:define name="content">
+		<h1 class="aw-page-title">Fornecedor</h1>
+    
+      <h:body>
+          <h:form id="frm_fornecedor" >
+              
+              
+              <p:toolbar>
+				<p:toolbarGroup>
+         
+                                    <p:commandButton value="Atualizar" action="#{controllerEditFornecedor.atualizarFornecedor}"> </p:commandButton>
+                                            
+	                               					 
+				</p:toolbarGroup>
+	        </p:toolbar>
+	      
+         <p:messages autoUpdate="true" /> 
+             
+              <div class="ui-fluid">
+                  
+                  <p:panelGrid id="capaPanel" columns="6" layout="grid"
+                               style="margin-top: 20px; margin-bottom: 60px"
+			       styleClass="panelgrid-noborder"
+			       columnClasses="ui-grid-col-2, ui-grid-col-2,
+                                  ui-grid-col-2, ui-grid-col-2,
+                                  ui-grid-col-2, ui-grid-col-2">
+                
+                     
+                     <p:outputLabel value="Tipo de Pessoa"/>
+                     <p:outputLabel value="CPF/CNPJ" for="cnpj_cpf" />
+                     <p:outputLabel value="Fornecedor" for="cliente" />
+                     <p:outputLabel value="RG/IE/EX" for="txt_ie"></p:outputLabel> 
+                     <p:outputLabel value="Cep"  />
+                     <p:outputLabel value="Estado" id="lbl_estados"/>
+                    
+                     
+                          <p:selectOneMenu id="tipo" disabled="true" >
+                               <f:selectItem id="PJ"  value="#{controllerEditFornecedor.fornecedor.tipo_pessoa}" 	
+                                   itemValue="JURIDICA" itemLabel="Tipo de Pessoa">
+                                     
+                               </f:selectItem>
+                               <f:selectItem id="PF" value="#{controllerEditFornecedor.fornecedor.tipo_pessoa}"  
+                                    itemValue="FISICA" itemLabel="FISICA"></f:selectItem>
+                                    <p:ajax  listener="#{facesUtils.mudaMascara}"  
+                                     update="cnpj_cpf"></p:ajax>
+                        </p:selectOneMenu> 
+                         <p:inputMask id="cnpj_cpf" 
+                             value="#{controllerEditFornecedor.fornecedor.cpf_cnpj}" 
+                             required="false"
+                             disabled="true" />   
+                 
+                       
+                       <p:inputText id="cliente" value="#{controllerEditFornecedor.fornecedor.nome}" required="true" />    
+                       <p:inputMask id="txt_ie" value="#{controllerEditFornecedor.fornecedor.ie_identidade_passaporte}" 
+                         placeholder="Identidade/Inscrição Estadual/Estrangeiro"
+                         mask="9999999999999"/>  
+                      <p:inputMask id="cep" value="#{controllerEditFornecedor.fornecedor.cep}"  mask="99.999-999"  required="true" />    
+                      <p:inputText value="#{controllerEditFornecedor.fornecedor.estado}"></p:inputText> 
+                 
+                    <p:outputLabel value="Cidade"  /> 
+                     <p:outputLabel value="Logradouro" for="logradouro" />
+                     <p:outputLabel value="Bairro" for="bairro" />
+                     <p:outputLabel value="Nº" for="numero" />
+                     <p:outputLabel value="Telefone Fixo" for="telefone" />
+                     <p:outputLabel value="Telefone Movel" for="telefone_movel" />
+                   
+                     
+                     <p:inputText value="#{controllerEditFornecedor.fornecedor.cidade}"></p:inputText>
+                     <p:inputText id="logradouro" value="#{controllerEditFornecedor.fornecedor.logradouro}" required="true" />  
+                     <p:inputText id="bairro" value="#{controllerEditFornecedor.fornecedor.bairro}" required="true" />    
+                     <p:inputText id="numero" value="#{controllerEditFornecedor.fornecedor.numero}" required="true" />    
+                     <p:inputMask id="telefone" value="#{controllerEditFornecedor.fornecedor.telefone1}" 
+                                   mask="(99)9999-9999" required="true" />  
+                      <p:inputMask id="telefone_movel" value="#{controllerEditFornecedor.fornecedor.telefone2}" 
+                                 mask="(99)99999-9999" required="true" />  
+                     
+					  
+					 <p:outputLabel value="Email" for="email" />
+                     <p:outputLabel value="Observação" for="txt_obs"></p:outputLabel>  
+                     <p:outputLabel/>   
+                     <p:outputLabel/>  
+                     <p:outputLabel/>  
+                     <p:outputLabel/>  
+                     
+                      <p:inputText id="email" value="#{controllerEditFornecedor.fornecedor.email}"
+                       required="true"
+                       placeholder="exemplo@provedor.com.br" />   
+                      <p:inputText id="txt_obs" value="#{controllerEditFornecedor.fornecedor.obs}"/>     
+					  
+                      
+                  </p:panelGrid>
+                  
+                  
+              </div>
+              
+              
+              
+              
+          </h:form>
+    </h:body>
+   </ui:define>
+    	
+</ui:composition>

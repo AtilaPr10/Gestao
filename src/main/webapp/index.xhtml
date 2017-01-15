@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:j="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    
+    
+    
+     <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="algaworks" name="styles/login.css" />
+    </h:head>
+
+    <h:body>
+    
+         <h:form id="frm_login">
+            
+              <div id="login-dialog">
+                   <p:messages autoUpdate="true" />
+                   <h2>Login</h2>
+
+                   <h:panelGrid columns="2" styleClass="grid-login">
+                       <p:outputLabel value="Usuário" for="usuario" />
+                       <p:inputText id="usuario" size="20"
+                            value="#{loginBean.nome}"/>
+                       <p:outputLabel value="Senha" for="senha" />         
+                       <p:password id="senha" size="20"
+                           value="#{loginBean.senha}"/>
+                       <p:commandButton value="Acessar"
+                            action="#{loginBean.login}" />
+                       <p:commandButton value="Limpar" resetValues="true" process="@this">
+                            
+                       </p:commandButton>     
+                              
+                   </h:panelGrid>    
+               
+              
+              </div>
+         
+         </h:form>
+    
+    
+    </h:body>
+   
+
+    
+
+</html>

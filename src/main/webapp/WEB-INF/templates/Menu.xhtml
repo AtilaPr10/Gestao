@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	
+	<nav class="aw-menu">
+		<ul>
+		  
+			<li>
+				<h:link><i class="fa  fa-fw  fa-home"></i>Dashboard</h:link>
+			</li>
+	   		
+			<li>
+				<h:link outcome="/principais/pessoas.xhtml"><i class="fa  fa-fw  fa-user"></i>Pessoas</h:link>
+			</li>
+			
+			<li class="is-selected">
+				<h:link outcome="/cadastro/projeto.xhtml"><i class="fa  fa-fw  fa-file-text"></i>Projetos</h:link>
+			</li>
+		
+			<li>
+				<h:link outcome="/principais/vendas.xhtml"><i class="fa  fa-fw  fa-flash"></i>Vendas</h:link>
+			</li>
+			
+			
+			<li>
+				<h:link outcome="/principais/estoque.xhtml"><i class="fa  fa-fw   fa-dropbox"></i>Estoque</h:link>
+			</li>
+			
+			<li>
+				<h:link outcome="/principais/financeiro.xhtml"><i class="fa  fa-fw  fa-dollar"></i>Financeiro</h:link>
+			</li>
+			
+			
+			<li>
+				<h:link outcome="/principais/configuracao.xhtml"><i class="fa  fa-fw  fa-cog"></i>Configurações</h:link>
+			</li>
+			
+		</ul>
+	</nav>
+	
+</ui:composition>

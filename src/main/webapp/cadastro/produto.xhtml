@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      template="/WEB-INF/templates/Layout.xhtml">
+      
+      
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    
+   <ui:define name="content">
+   
+		<h1 class="aw-page-title">Produto</h1>
+      <h:body>
+      
+         <h:form id="frm_produto" enctype="multipart/form-data" >
+         
+              <p:toolbar>               
+                 <p:toolbarGroup>
+                     <p:commandButton value="Novo" action="#{controllerProduto.novo}" update="frm_produto" process="@this">
+                       <p:resetInput target="frm_produto"></p:resetInput>
+                     </p:commandButton>              
+                    <p:commandButton value="Salvar" action="#{controllerProduto.salvar}"/>
+                    <p:commandButton value="Localizar"></p:commandButton>
+                </p:toolbarGroup>                              
+	                               					 
+			  </p:toolbar>
+              
+            
+	          <p:messages autoUpdate="true" /> 
+             
+              <div class="ui-fluid">
+              
+              
+                   <!-- dialogo codigo de barras -->                       
+      <p:dialog widgetVar="for_codigo" header="Adicione o Codigo" modal="true" resizable="flase" style="min-width: 300px" >
+               
+           <h:panelGroup id="itemPanel" layout="block" styleClass="ui-fluid">
+                 <p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col4,ui-grid-col8">
+                      <p:outputLabel value="Tipo"></p:outputLabel>
+                      <p:outputLabel value="Codigo"></p:outputLabel>
+                      <p:outputLabel value="Fator"></p:outputLabel>
+                        <p:selectOneMenu value="#{controllerProduto.produto_ean.tipo}">
+                           <f:selectItem itemLabel="Ean" itemValue="EAN"></f:selectItem>
+                           <f:selectItem itemLabel="Literal" itemValue="Literal"></f:selectItem>
+              
+                        </p:selectOneMenu>
+                     
+                        <p:inputText value="#{controllerProduto.produto_ean.codigo_ean}" required="true"></p:inputText>
+                        <p:inputText value="#{controllerProduto.produto_ean.fator}" required="true">
+                           <f:convertNumber/>
+                        </p:inputText>
+                        <p:outputLabel/>
+                        <p:outputLabel/>
+                        <p:commandButton value="Adicionar" action="#{controllerProduto.adicionaEan}" 
+                        process="@this"
+                        update="tab_ean"
+                        />
+                       
+                </p:panelGrid>
+          </h:panelGroup>  
+     </p:dialog>
+              
+                  <p:outputLabel 
+                                   id="lbl_descricao"
+                                   value="#{controllerProduto.produto.descricao}"
+                                   style="text-transform: uppercase"
+                                   onblur="value=value.toUpperCase()"/> 
+                            
+                   <p:panelGrid id="capaPanel" columns="4" layout="grid"
+                               style="margin-top: 20px; margin-bottom: 40px"
+			                   styleClass="panelgrid-noborder"
+			                   columnClasses="ui-grid-col-4, ui-grid-col-3,
+                                              ui-grid-col-2, ui-grid-col-2">
+                              
+                             
+                             <p:outputLabel value="Descrição "/>
+                             <p:outputLabel value="Descrição Reduzida"/>
+                             <p:outputLabel value="Seção"/>
+                             <p:outputLabel value="Grupo"/>
+                             
+                              
+                             <p:inputText  value="#{controllerProduto.produto.descricao}"
+                                 id="txt_desc"
+                                 required="true"
+                                 onfocus="txt_desc"
+                                 style="text-transform: uppercase;margin-weight:60px"
+                                 onblur="value=value.toUpperCase()">
+                                 <p:ajax event="keyup" update="lbl_descricao,desc_reduzida"></p:ajax>
+                                
+                             </p:inputText>
+                             
+                             
+                             <p:inputText id="desc_reduzida" 
+                                value="#{controllerProduto.produto.descricao_reduzida}"
+                                style="text-transform: uppercase"
+                                maxlength="20">
+                                 
+                             </p:inputText>    
+                             
+                            
+                            
+                             <p:selectOneMenu value="#{controllerProduto.produto.secao}"
+                               required="true" requiredMessage="Adicione uma seção"
+                               converter="SecaoConverter"
+                               style="text-transform: uppercase"
+                               onkeyup ="this.value = this.value.toUpperCase();">
+                                  
+                                  <p:ajax listener="#{controllerProduto.retornaGrupos}"  update="grupos"/>
+                                  
+                                  <f:selectItem itemLabel="-- Selecione --"
+                                                noSelectionOption="true" />
+                                  <f:selectItems value="#{controllerProduto.lista_secoes}"
+                                                 var="#{secao}"
+                                                 itemValue="#{secao.id}" itemLabel="#{secao.descricao}">
+                                                 
+                                   
+                                                   
+                                  </f:selectItems>
+                             
+                             </p:selectOneMenu>
+                            
+                            
+                            
+                             <p:selectOneMenu id="grupos" value="#{controllerProduto.produto.grupo}"
+                               required="false" requiredMessage="Adicione uma grupo"
+                               converter="GrupoConverter"
+                               style="text-transform: uppercase"
+                               onkeyup ="this.value = this.value.toUpperCase();">
+                                  
+                                 <f:selectItem itemLabel="-- Selecione --"
+                                                noSelectionOption="true" />
+                                      <f:selectItems value="#{controllerProduto.lista_grupo}"
+                                                 var="#{grupo}"
+                                                 itemValue="#{grupo.id}" itemLabel="#{grupo.nome}">
+                                        </f:selectItems>
+                             
+                             </p:selectOneMenu>
+                             
+                             <p:outputLabel value="Codigo de Barras"/>
+                             <p:outputLabel/>
+                             <p:outputLabel/>    
+                          <!-- EAN 13 --> 
+                            <p:outputPanel layout="grid" id="panelGroup">
+                          
+                              <p:dataTable id="tab_ean" var="ean" value="#{controllerProduto.lista_ean}"
+                                  editable="true" styleClass="panelgrid-noborder" 
+                                  emptyMessage="Sem registros" >
+                             
+                                 <p:column headerText="Codigo ">
+                                    <h:outputText value="#{ean.codigo_ean}" />
+                                 </p:column>
+                                <p:column headerText="Fator ">
+                                    <h:outputText value="#{ean.fator}"/>
+                                </p:column> 
+                                <p:column>
+                                  <p:commandLink title="Excluir" value="Excluir" />
+                                </p:column>
+                           
+                             </p:dataTable>
+                               <p:commandButton  value="Adicionar" action="#{controllerProduto.adicionaEan}" type="button" 
+                                onclick="PF('for_codigo').show();" update=":form:panelGroup" /> 
+                         </p:outputPanel>
+                     
+                             
+                          
+                          
+                         
+                    
+                             <p:accordionPanel multiple="true" >
+                                    <p:tab title="Forma de Venda">
+                                       <h:panelGrid columns="1" cellpadding="10" >
+                                              <p:selectOneRadio id="console" value="#" columns="1" layout="grid">
+                                                  <f:selectItem itemLabel="Unidade " itemValue="N"/>
+                                                  <f:selectItem itemLabel="Fracionado" itemValue="C" />
+                                                
+                                         </p:selectOneRadio>
+                                        </h:panelGrid>
+                                     </p:tab>
+                                   <p:tab title="Composição">
+                                   <h:panelGrid columns="1" cellpadding="10">
+                                        <p:selectOneRadio id="console2" value="#" columns="1" layout="grid" >
+                                                  <f:selectItem itemLabel="Normal " itemValue="N" />
+                                                  <f:selectItem itemLabel="Composto " itemValue="C" />
+                                                  <f:selectItem itemLabel=" Kit" itemValue="K" />
+                                         </p:selectOneRadio>
+                                  </h:panelGrid>
+                                  </p:tab>
+                            </p:accordionPanel>
+                             
+                             
+                         
+ 
+                            
+    </p:panelGrid>   
+    </div>           
+    <p:separator /> 
+      <p:tabView>
+       <p:tab title="Fornecedor">
+       
+            
+                            <p:outputLabel value="Fornecedor"/>
+                            <p:inputText/>
+                            <p:outputLabel value="Tipo de Embalagem"/>
+                            
+                            <p:selectOneMenu>
+                               <f:selectItem itemLabel="Selecione" />
+                                <f:selectItem itemValue="UN"    itemLabel="UN"/>
+                                <f:selectItem itemValue="CX"    itemLabel="CX"/>
+                                <f:selectItem itemValue="KG"    itemLabel="KG"/>
+                                <f:selectItem itemValue="PCT"   itemLabel="PCT"/>
+                                <f:selectItem itemValue="LT"    itemLabel="LT"/>
+                                <f:selectItem itemValue="MIL"   itemLabel="MIL"/>
+                                <f:selectItem itemValue="FD"    itemLabel="FD"/>
+                            </p:selectOneMenu>   
+                            <p:outputLabel value="Itens da Embalagem"/>
+                            <p:inputText placeholder="Quantidade de itens que vem na emb Ex:CX com 10 itens"/>
+                            <p:outputLabel value="Codigo do Fornecedor"/>
+                            <p:inputText placeholder="Codigo que vem na nota do fornecedor"/>
+                            <p:outputLabel value="Tipo de Fornecedor"/>
+                            <p:selectOneMenu>
+                                  <f:selectItem itemLabel="Selecione"/>
+                                  <f:selectItem itemValue="PRINCIPAL" itemLabel="PRINCIPAL"/>
+                                  <f:selectItem itemValue="SECUNDARIO"  itemLabel="SECUNDARIO"/>
+                            </p:selectOneMenu>
+          
+       </p:tab>
+        <p:tab title="Impostos">
+                 <p:outputLabel value="Tabela A - Origem do Produto"/>     
+                          
+                            <p:selectOneMenu id="sel_tabelaa"  value="#{controllerProduto.produto.tabelaa}">
+                            
+                                <f:selectItem itemLabel="0- Nacional,exceto as indicadas nos codigos 3 a 5" itemValue="0" />
+                                <f:selectItem itemLabel="1- Estrangeira importação direta,exceto a indicada no codigo 6" itemValue="1" />
+                                <f:selectItem itemLabel="2- Estrangeira adquirida no mercado interno,exceto a indicação no 7" itemValue="2" />
+                                <f:selectItem itemLabel="3- Nacional,mercadoria ou bem com conteudo de importação" itemValue="3" />
+                                <f:selectItem itemLabel="4- Nacional,cuja produção tenha sido feita em conformidade com os processos produtivos basicos de que tratam o Decreto 288/67 e as leis n°8.248/91,8.387/91,10.176/01,11.484/07"  itemValue="4" />
+                                <f:selectItem itemLabel="5- Nacional,mercadoria ou bem com conteudo de importação inferior ou igual a 40%" itemValue="5" />
+                                <f:selectItem itemLabel="6- Estrangeira,importação direta sem similar nacional constante em lista de resolução Camex" itemValue="6" />
+                                <f:selectItem itemLabel="7- Estrangeira,adquirida no mercado interno sem similar nacional,constante em lista de resolução Camex" itemValue="7" />
+               
+                            </p:selectOneMenu>  
+                            
+                            <p:outputLabel value="Tabela B -CST Entrada"/>
+                            <p:selectOneMenu id="sel_tabelabent" value="#{controllerProduto.produto.tabelabentrada}">
+                                   <f:selectItem  itemLabel="00 -Tributado Integral" itemValue="00"/>
+                                   <f:selectItem  itemLabel="10 -Tributado com cobrança de icms substituto" itemValue="10"/>
+                                   <f:selectItem  itemLabel="20 -Tributado com redução na base de calculo" itemValue="20"/>
+                                   <f:selectItem  itemLabel="30 -Isento com cobrança de icms substituto" itemValue="30"/>
+                                   <f:selectItem  itemLabel="40 -Isento" itemValue="40"/>
+                                   <f:selectItem  itemLabel="41 -Não Tributado" itemValue="41"/>
+                                   <f:selectItem  itemLabel="50 -Suspensão" itemValue="50"/>
+                                   <f:selectItem  itemLabel="41 -Diferimento" itemValue="41"/>
+                                   <f:selectItem  itemLabel="60 -Cobrado anteriormente por substituição tributaria" itemValue="60"/>
+                                   <f:selectItem  itemLabel="70 -Tributado com redução na base de calculo e cobrança de icms substituto" itemValue="70"/>
+                                   <f:selectItem  itemLabel="90 -Outros" itemValue="90"/>
+                            </p:selectOneMenu>
+                            
+                             <p:outputLabel value="Tabela B -CST Saida"/>
+                            <p:selectOneMenu id="sel_tabelabsai" value="#{controllerProduto.produto.tabelabsaida}">
+                                   <f:selectItem  itemLabel="00 -Tributado Integral" itemValue="00"/>
+                                   <f:selectItem  itemLabel="10 -Tributado com cobrança de icms substituto" itemValue="10"/>
+                                   <f:selectItem  itemLabel="20 -Tributado com redução na base de calculo" itemValue="20"/>
+                                   <f:selectItem  itemLabel="30 -Isento com cobrança de icms substituto" itemValue="30"/>
+                                   <f:selectItem  itemLabel="40 -Isento" itemValue="40"/>
+                                   <f:selectItem  itemLabel="41 -Não Tributado" itemValue="41"/>
+                                   <f:selectItem  itemLabel="50 -Suspensão" itemValue="50"/>
+                                   <f:selectItem  itemLabel="41 -Diferimento" itemValue="41"/>
+                                   <f:selectItem  itemLabel="60 -Cobrado anteriormente por substituição tributaria" itemValue="60"/>
+                                   <f:selectItem  itemLabel="70 -Tributado com redução na base de calculo e cobrança de icms substituto" itemValue="70"/>
+                                   <f:selectItem  itemLabel="90 -Outros" itemValue="90"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="NCM "/>
+                            <p:inputText placeholder="Nomenclatura comum do mercosul" maxlength="8"/>
+                            <p:outputLabel value="CEST"/>
+                            <p:inputText placeholder="Codigo especificador de substituição tributaria"/>
+                            <p:outputLabel value="Pis"/>
+                            <p:inputText placeholder="% -Pis"/>
+                            <p:outputLabel value="Cofins"/>
+                            <p:inputText placeholder="% -Cofins"/>
+                            <p:outputLabel value="Ipi"/>
+                            <p:inputText placeholder="R$ -Ipi"/>
+                                
+          
+          
+       </p:tab>
+        <p:tab title="Informações">
+              <p:panelGrid id="capaPanelTab2" columns="4" layout="grid"
+                               style="margin-top: 20px; margin-bottom: 40px"
+			                   styleClass="panelgrid-noborder"
+			                   columnClasses="ui-grid-col-2, ui-grid-col-4,
+                               ui-grid-col-2, ui-grid-col-4">
+        
+       
+                         <p:outputLabel value="Inativo"/>
+                         <p:inputSwitch value="#{controllerProduto.produto.fora_de_linha}" />
+                         <p:outputLabel value="Enviar para a balança"/>
+                         <p:inputSwitch value="#{controllerProduto.produto.balanca}"/>
+                         <p:outputLabel value="Local de Estoque"/> 
+                         <p:selectOneMenu id="loc_estoque" value="#{controllerProduto.produto.localestoque}"
+                               required="false" 
+                               converter="LocalEstoqueConverter"
+                               style="text-transform: uppercase"
+                               >  
+                                  <f:selectItem itemLabel="-- Selecione --"
+                                                noSelectionOption="true"  />
+                                        <f:selectItems value="#{controllerProduto.lista_loc_estoque}"
+                                                 var="#{local}"
+                                                 itemValue="#{local.id}" itemLabel="#{local.descricao}">
+                                       </f:selectItems>
+                             
+                         </p:selectOneMenu>
+                         
+                  </p:panelGrid>       
+          
+       </p:tab>
+      
+      </p:tabView>
+   
+    
+            
+            
+     </h:form>
+   </h:body>
+ </ui:define>
+    	
+</ui:composition>

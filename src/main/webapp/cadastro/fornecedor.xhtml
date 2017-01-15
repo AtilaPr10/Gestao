@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      template="/WEB-INF/templates/Layout.xhtml">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    
+   <ui:define name="content">
+		<h1 class="aw-page-title">Fornecedor</h1>
+    
+      <h:body>
+          <h:form id="frm_fornecedor" >
+              
+              
+              <p:toolbar>
+				<p:toolbarGroup>
+                                    <p:commandButton value="Novo" action="#{controllerFornecedor.novo}"  update="frm_fornecedor" process="@this" >
+                                       <p:resetInput target="frm_fornecedor"></p:resetInput>
+                                    </p:commandButton>
+                                    <p:commandButton value="Salvar" action="#{controllerFornecedor.salvar}"> </p:commandButton>
+                                    <p:commandButton value="Buscar" ajax="false" action="/dialogos/selecao_fornecedor.xhtml?faces-redirect=true" immediate="true"></p:commandButton>
+			 
+				</p:toolbarGroup>
+	        </p:toolbar>
+	     
+         <p:messages autoUpdate="true" /> 
+              
+              <div class="ui-fluid">
+                  
+                  <p:panelGrid id="capaPanel" columns="4" layout="grid"
+                               style="margin-top: 20px; margin-bottom: 40px"
+			       styleClass="panelgrid-noborder"
+			       columnClasses="ui-grid-col-2, ui-grid-col-4,
+                               ui-grid-col-2, ui-grid-col-4">
+                
+                      
+                     <p:outputLabel value="Tipo de Pessoa"/>
+                     <p:outputLabel value="Fornecedor" for="cliente" />
+                     <p:outputLabel value="CPF/CNPJ" for="cnpj_cpf" />
+                     <p:outputLabel value="RG/IE/EX" for="txt_ie"></p:outputLabel> 
+                     
+                       <p:selectOneMenu id="tipo" >
+                               <f:selectItem id="PJ"  value="#{controllerFornecedor.fornecedor.tipo_pessoa}" 	
+                                   itemValue="JURIDICA" itemLabel="JURIDICA">
+                                     
+                               </f:selectItem>
+                               <f:selectItem id="PF" value="#{controllerFornecedor.fornecedor.tipo_pessoa}"  
+                                    itemValue="FISICA" itemLabel="FISICA"></f:selectItem>
+                                    <p:ajax  listener="#{facesUtils.mudaMascara}"  
+                                     update="cnpj_cpf"></p:ajax>
+                        </p:selectOneMenu> 
+                        
+                     <p:inputText id="cliente" value="#{controllerFornecedor.fornecedor.nome}" required="true" />  
+			         <p:inputMask id="cnpj_cpf" 
+                        value="#{controllerFornecedor.fornecedor.cpf_cnpj}" 
+                        mask="#{facesUtils.mask}" 
+                        required="true" />   
+                     <p:inputMask id="txt_ie" value="#{controllerFornecedor.fornecedor.ie_identidade_passaporte}" 
+                         placeholder="Identidade/Inscrição Estadual/Estrangeiro"
+                         mask="9999999999999"/>  
+                     
+                      <p:outputLabel value="Cep"  />
+                      <p:outputLabel value="Logradouro" for="logradouro" />
+                      <p:outputLabel value="Nº" for="numero" />
+                      <p:outputLabel value="Bairro" for="bairro" />
+                      
+                      <p:inputMask id="cep" value="#{controllerFornecedor.fornecedor.cep}"  mask="99.999-999"  required="true" />    
+                      <p:inputText id="logradouro" value="#{controllerFornecedor.fornecedor.logradouro}" required="true" />    
+                      <p:inputText id="numero" value="#{controllerFornecedor.fornecedor.numero}" required="true" />  
+                      <p:inputText id="bairro" value="#{controllerFornecedor.fornecedor.bairro}" required="true" /> 
+                      
+                      
+                      <p:outputLabel value="Estado" id="lbl_estados"/>
+                      <p:outputLabel value="Cidade" for="cidades" />
+                      <p:outputLabel value="Telefone Fixo" for="telefone" />
+                      <p:outputLabel value="Telefone Movel" for="telefone_movel" /> 
+                       
+                       
+                       <p:selectOneMenu id="sel_estado" 
+                       
+                             value="#{controllerFornecedor.estado}">
+                             <p:ajax listener="#{controllerFornecedor.buscaMunicipios}"  update="cidades"  />  
+                           
+                               <f:selectItem itemLabel="AC" itemValue="12" />
+                               <f:selectItem itemLabel="AL" itemValue="27" />
+                               <f:selectItem itemLabel="AP" itemValue="16" />
+                               <f:selectItem itemLabel="AM" itemValue="13" />
+                               <f:selectItem itemLabel="BA" itemValue="29" />
+                               <f:selectItem itemLabel="CE" itemValue="23" />
+                               <f:selectItem itemLabel="DF" itemValue="53" />
+                               <f:selectItem itemLabel="ES" itemValue="32" />
+                               <f:selectItem itemLabel="GO" itemValue="52" />
+                               <f:selectItem itemLabel="MA" itemValue="21" />
+                               <f:selectItem itemLabel="MT" itemValue="51" />
+                               <f:selectItem itemLabel="MS" itemValue="50" />
+                               <f:selectItem itemLabel="MG" itemValue="31" />
+                               <f:selectItem itemLabel="PA" itemValue="15" />
+                               <f:selectItem itemLabel="PB" itemValue="25" />
+                               <f:selectItem itemLabel="PR" itemValue="41" />
+                               <f:selectItem itemLabel="PE" itemValue="26" />
+                               <f:selectItem itemLabel="PI" itemValue="22" />
+                               <f:selectItem itemLabel="RJ" itemValue="33" />
+                               <f:selectItem itemLabel="RN" itemValue="24" />
+                               <f:selectItem itemLabel="RS" itemValue="43" />
+                               <f:selectItem itemLabel="RO" itemValue="11" />
+                               <f:selectItem itemLabel="RR" itemValue="14" />
+                               <f:selectItem itemLabel="SC" itemValue="42" />
+                               <f:selectItem itemLabel="SP" itemValue="35" />
+                               <f:selectItem itemLabel="SE" itemValue="28" />
+                               <f:selectItem itemLabel="TO" itemValue="17" />
+                           
+                         </p:selectOneMenu>  
+                         
+                      <p:selectOneMenu size="5" value="#{controllerFornecedor.fornecedor.cidade}" id="cidades" editable="true" effect="fold">
+                           <f:selectItems value="#{controllerFornecedor.municipios}"  />
+                      </p:selectOneMenu>
+                      
+                      <p:inputMask id="telefone" value="#{controllerFornecedor.fornecedor.telefone1}" 
+                                   mask="(99)9999-9999" required="true" />  
+                      <p:inputMask id="telefone_movel" value="#{controllerFornecedor.fornecedor.telefone2}" mask="(99)99999-9999" required="true" />  
+                     
+                      <p:outputLabel value="Email" for="email" />
+                      <p:outputLabel value="Observação" for="txt_obs"></p:outputLabel>
+                      <p:outputLabel/>
+                      <p:outputLabel/>
+                      <p:inputText id="email" value="#{controllerFornecedor.fornecedor.email}"
+                          required="true"
+                          placeholder="exemplo@provedor.com.br" >
+                          <p:tooltip value="Digite com o email do cliente" for="email" onShow="true"/>  
+                      </p:inputText>        
+                      <p:inputText id="txt_obs" value="#{controllerFornecedor.fornecedor.obs}"/>                   
+                  </p:panelGrid>
+                  
+                  
+              </div>
+              
+             <p:separator/>
+              <p:tabView>
+              
+                  <p:tab title="Contato">
+                     
+                  </p:tab>
+                  <p:tab title="Financeiro">
+                  </p:tab>
+              
+     
+              </p:tabView>
+              
+              
+          </h:form>
+    </h:body>
+   </ui:define>
+    	
+</ui:composition>

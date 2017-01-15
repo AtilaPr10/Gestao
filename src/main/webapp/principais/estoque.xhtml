@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      template="/WEB-INF/templates/Layout.xhtml">
+      
+      
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    
+   <ui:define name="content">
+		<h1 class="aw-page-title">Estoque</h1>
+   
+      <h:body>
+          <h:form id="frm_produto" >
+              
+             
+	      
+         <p:messages autoUpdate="true" /> 
+         
+             
+              <div class="ui-fluid">
+             
+             
+               
+                
+                   <p:menubar >
+                     <p:submenu label="Opções">
+                     <p:submenu label="Produto">
+                               <p:menuitem value="Produto" url="/cadastro/produto.xhtml" />
+                          <p:submenu label="Classificação">   
+                               <p:menuitem value="Seção" url="/cadastro/classificacao.xhtml" />
+                               <p:menuitem value="Grupo" url="/cadastro/grupo.xhtml" />
+                          </p:submenu>  
+                     </p:submenu>
+                     <p:submenu label="Nota Fiscal">
+                               <p:menuitem value="Entrada" url="#" />
+                               <p:menuitem value="Saida" url="#" />
+                               <p:menuitem value="Operação" url="#" /> 
+                     </p:submenu>
+                     <p:submenu label="Compra">
+                               <p:menuitem value="Cotação" url="#" />
+                               <p:menuitem value="Conferência cega" url="#" />
+                     </p:submenu>
+                     <p:submenu label="Local de Estoque">
+                               <p:menuitem value="Local" url="/cadastro/localestoque.xhtml" />
+                               <p:menuitem value="Requisição" url="#" />
+                     </p:submenu>
+                     
+                    </p:submenu>
+                    </p:menubar>                           
+	                               					 
+			
+                  
+                  
+                  
+              </div>
+              
+              
+              
+              
+          </h:form>
+    </h:body>
+   </ui:define>
+    	
+</ui:composition>

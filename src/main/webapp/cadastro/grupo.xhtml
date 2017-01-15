@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      template="/WEB-INF/templates/Layout.xhtml">
+      
+      
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    
+   <ui:define name="content">
+		<h1 class="aw-page-title">Grupo</h1>
+   
+      <h:body>
+          
+          <h:form id="frm_grupo" >
+          <p:outputLabel value="#{grupoBean.grupo.nome}"
+                style="text-transform: uppercase"
+                onblur="value=value.toUpperCase()"
+                id="lbl_descricao"/>
+               
+                 <p:toolbar>
+                    <p:toolbarGroup>
+                           <p:commandButton value="Novo" action="#{grupoBean.novo}" update="frm_grupo" process="@this">
+                                <p:resetInput target="frm_grupo"></p:resetInput>
+                           </p:commandButton>
+                           <p:commandButton value="Salvar" action="#{grupoBean.salvar}"></p:commandButton>
+                     </p:toolbarGroup>                              
+	            </p:toolbar>
+              
+          
+                <p:messages autoUpdate="true" /> 
+         <div class="ui-fluid">
+             
+                  <p:panelGrid id="capaPanel" columns="2" layout="grid"
+                               style="margin-top: 20px; margin-bottom: 40px"
+			       styleClass="panelgrid-noborder"
+			       columnClasses="ui-grid-col-2, ui-grid-col-4,
+                               ui-grid-col-2, ui-grid-col-4">
+                               
+                               <p:outputLabel value="Seções"/>
+                               <p:selectOneMenu value="#{grupoBean.grupo.secao}"
+                                   required="true" requiredMessage="Adcione uma seção"
+                                   converter="SecaoConverter">
+                                  
+                                  
+                                  
+                                  <f:selectItem itemLabel="-- Selecione --"
+                                                noSelectionOption="true" />
+                                  <f:selectItems value="#{grupoBean.lista_secoes}"
+                                                 var="#{secao}"
+                                                 itemValue="#{secao.id}" itemLabel="#{secao.descricao}">
+                                                 
+                                   
+                                                   
+                                  </f:selectItems>
+                             
+                             </p:selectOneMenu>
+                            
+                               
+                               <p:outputLabel  value="Grupo"/>
+                               <p:inputText value="#{grupoBean.grupo.nome}"
+                                   style="text-transform: uppercase"
+                                   onblur="value=value.toUpperCase()">
+                                	   <p:ajax event="keyup" update="lbl_descricao"></p:ajax>
+                                       <f:ajax event="keyup" render="@this"  />
+                              </p:inputText>
+                              
+                      
+                  </p:panelGrid>
+                  
+                  
+              </div>
+              
+              
+              
+              
+          </h:form>
+    </h:body>
+   </ui:define>
+    	
+</ui:composition>
